@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 export const ProductSchema = z.object({
+  id: z.string(),
   name: z
     .string()
     .nonempty({ message: 'Nome é obrigatório' })
