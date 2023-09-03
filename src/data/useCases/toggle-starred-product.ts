@@ -2,7 +2,7 @@ import { IToggleStarredProduct } from '@/domain/useCases/toggle-starred-product'
 import { IStorage } from '../storage/get-set-storage';
 import { StarredProduct } from '@/domain/models/StarredProduct';
 
-export class SignUp implements IToggleStarredProduct {
+export class ToggleStarredProduct implements IToggleStarredProduct {
   constructor(private readonly storage: IStorage) {}
 
   async execute(request: IToggleStarredProduct.Request): Promise<void> {
