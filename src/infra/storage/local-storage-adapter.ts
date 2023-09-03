@@ -7,6 +7,10 @@ export class LocalStorageAdapter implements IStorage {
   }
 
   get(key: string): any {
-    return JSON.parse(localStorage.getItem(key) || '{}');
+    const item = localStorage.getItem(key);
+
+    if (item) return JSON.parse(item)
+
+    return null;
   }
 }

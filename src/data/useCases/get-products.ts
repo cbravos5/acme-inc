@@ -20,7 +20,10 @@ export class GetProducts implements IGetProducts {
     private readonly getAllowedNouns: IGetAllowedNouns,
     private readonly getAllowedAdjectives: IGetAllowedAdjectives,
     private readonly storage: IStorage) {
-    this.mountProducts();
+    const storageProducts = storage.get('products') as Product[];
+
+    if (storageProducts) this.products = storageProducts;
+    else this.mountProducts();
   }
 
   async executePaged(request: IGetProducts.PagedRequest): Promise<IGetProducts.PagedResponse> {
@@ -68,6 +71,8 @@ export class GetProducts implements IGetProducts {
         image: `https://picsum.photos/${i}/picsum/900/600`,
       };
     });
+
+    this.storage.set('products', this.products);
   }
 
   private getPrice(nameLength: number, descrLength: number) {
