@@ -12,6 +12,7 @@ export const ProductSchema = z.object({
     .min(20, 'Descrição deve ter no mínimo 20 caracteres')
     .max(500, 'Descrição deve ter no máximo 500 caracteres'),
   price: z.number().nonnegative('Preço deve ser pelo menos zero'),
+  image: z.string(),
 });
 
 export type Product = z.infer<typeof ProductSchema>;

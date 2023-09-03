@@ -1,20 +1,24 @@
 import { Product } from "@/domain/models/Product";
 
 export interface IGetProducts {
-  execute(request: IGetProducts.Request): Promise<IGetProducts.Response>
+  executePaged(request: IGetProducts.PagedRequest): Promise<IGetProducts.PagedResponse>;
+
+  executeSingle(id: string): Promise<IGetProducts.SingleResponse>;
 }
 
 export namespace IGetProducts {
-  export type Request = {
+  export type PagedRequest = {
     currentPage: number;
     pageSize: number;
   }
 
-  export type Response = {
+  export type PagedResponse = {
     products: Product[];
     pagination: {
       currentPage: number;
-      hasNextPage: boolean;
+      totalPages: number;
     }
   }
+
+  export type SingleResponse = Product;
 }
