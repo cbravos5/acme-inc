@@ -16,7 +16,7 @@ export default function Layout({ children }: PropsWithChildren) {
     const product = searchParams.get('product');
 
     if (session.active && checkout) router.push('/checkout');
-    else if (session.active && product) router.push(`/product/${product}`);
+    else if (session.active && product) router.push(`/products/${product}`);
     else if (session.active) router.push('/');
   }, [session]);
 

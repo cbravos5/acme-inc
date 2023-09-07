@@ -1,26 +1,26 @@
 import Link from 'next/link';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui/Card';
-import { Button } from '../ui/Button';
-import { StarProduct } from './StarProduct';
 import { Product } from '@/domain/models/Product';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './ui/Card';
+import { StarProduct } from './StarProduct';
+import { Button } from './ui/Button';
 
 type Props = {
   product: Product;
   isStarred: boolean;
 };
 
-const currencyFormater = new Intl.NumberFormat('pt-BR', { currency: 'BRL', style: 'currency' })
+const currencyFormater = new Intl.NumberFormat('pt-BR', { currency: 'BRL', style: 'currency' });
 
 export function ProductCard(props: Props) {
   const { isStarred, product } = props;
 
   return (
-    <Card className="w-full max-w-xs p-1 animate-fade-up flex flex-col">
+    <Card className="flex w-full max-w-xs animate-fade-up flex-col p-1">
       <CardHeader className="flex-row items-center justify-between p-2">
         <CardTitle className="text-xl leading-none">{product.name}</CardTitle>
         <StarProduct isStarred={isStarred} />
       </CardHeader>
-      <CardContent className="p-2 h-full">
+      <CardContent className="h-full p-2">
         <Link
           className="block max-h-24 max-w-full overflow-hidden rounded-xl"
           href={`/product/${product.id}`}
