@@ -2,9 +2,9 @@ import { Product } from "@/domain/models/Product";
 import { IGetAllowedAdjectives } from "@/domain/useCases/get-allowed-adjectives";
 import { IGetAllowedNouns } from "@/domain/useCases/get-allowed-nouns";
 import { IGetProducts } from "@/domain/useCases/get-products";
-import { randomUUID } from "crypto";
 import { LoremIpsum } from "lorem-ipsum";
 import { IStorage } from "../storage/get-set-storage";
+import { v4 } from "uuid";
 
 export class GetProducts implements IGetProducts {
 
@@ -64,7 +64,7 @@ export class GetProducts implements IGetProducts {
       const price = this.getPrice(name.length, description.length);
 
       return {
-        id: randomUUID(),
+        id: v4(),
         name,
         description,
         price,

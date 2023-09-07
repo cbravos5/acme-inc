@@ -5,6 +5,7 @@ import { Raleway } from 'next/font/google';
 
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { AppLayout } from '@/components/AppLayout';
+import { Toaster } from '@/components/ui/Toaster';
 
 export const raleway = Raleway({
   subsets: ['latin'],
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="font-raleway">
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <AppLayout>{children}</AppLayout>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

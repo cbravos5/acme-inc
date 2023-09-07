@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs-react';
 
 import { ISignUp } from '@/domain/useCases/sign-up';
 import { IStorage } from '../storage/get-set-storage';

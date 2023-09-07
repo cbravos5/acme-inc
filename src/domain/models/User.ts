@@ -8,6 +8,7 @@ export const UserSchema = z.object({
   email: z
     .string()
     .nonempty('E-mail é obrigatório')
+    .email('Não é um email válido')
     .max(100, 'E-mail deve ter no máximo 100 caracteres'),
   phone: z
     .string()
