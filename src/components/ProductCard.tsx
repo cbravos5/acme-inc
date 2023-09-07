@@ -18,7 +18,7 @@ export function ProductCard(props: Props) {
     <Card className="flex w-full max-w-xs animate-fade-up flex-col p-1">
       <CardHeader className="flex-row items-center justify-between p-2">
         <CardTitle className="text-xl leading-none">{product.name}</CardTitle>
-        <StarProduct isStarred={isStarred} />
+        <StarProduct isStarred={isStarred} productId={product.id} />
       </CardHeader>
       <CardContent className="h-full p-2">
         <Link

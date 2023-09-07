@@ -24,13 +24,11 @@ export function SearchBar({ onChange, filterStarred }: Props) {
 
       <TooltipProvider>
         <Tooltip>
-          <TooltipTrigger>
-            <button
-              onClick={filterStarred.toggle}
-              className={cn('flex items-center gap-1 text-gray-400', filterStarred.value && 'text-primary')}
-            >
-              Favoritos <FilledStarIcon className="h-4 w-4" />
-            </button>
+          <TooltipTrigger
+            onClick={filterStarred.toggle}
+            className={cn('flex items-center gap-1 text-gray-400', filterStarred.value && 'text-primary')}
+          >
+            Favoritos <FilledStarIcon className="h-4 w-4" />
           </TooltipTrigger>
           <TooltipContent className="bg-primary-foreground shadow">
             <p className="font-bold text-secondary-foreground">Filtrar por favoritos</p>
