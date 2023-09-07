@@ -1,13 +1,17 @@
 'use client';
 
 import { ProductCard } from '@/components/ProductCard';
+import { SearchBar } from '@/components/SearchBar';
 import { ThemedButton } from '@/components/ThemedButton';
+import { FilledStarIcon } from '@/components/icons/FilledStarIcon';
 import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
 import { Product } from '@/domain/models/Product';
 import { getProducts } from '@/main/registry';
 import { starredProductsAtom } from '@/store/starred';
 import { useAtomValue } from 'jotai';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useBoolean, useDebounce } from 'usehooks-ts'
 
 export default function Home() {
   const starredProducts = useAtomValue(starredProductsAtom);
@@ -16,38 +20,52 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [search, setSearch] = useState<string>('')
+  const debouncedSearch = useDebounce<string>(search, 500)
+
+  const filterStarred = useBoolean(false);
+
+  const isLoading = useBoolean(true);
 
   const onGetProducts = async (page: number) => {
-    setIsLoading(true);
+    isLoading.setTrue();
 
-    const response = await getProducts.executePaged({ currentPage: page, pageSize: 25 });
+    const response = await getProducts.executePaged({ currentPage: page, pageSize: 10 });
     setProducts((state) => state.concat(response.products));
     setTotalPages(response.pagination.totalPages);
 
-    setIsLoading(false);
+    isLoading.setFalse();
   };
 
   useEffect(() => {
-    console.log(currentPage, totalPages)
-
     onGetProducts(currentPage);
   }, [currentPage]);
 
+  const filteredProducts = useMemo(() => {
+    const upperCasedSearch = debouncedSearch.toUpperCase();
+
+    let filtered = products.filter(({ name }) => name.toUpperCase().includes(upperCasedSearch));
+
+    if (filterStarred.value) filtered = filtered.filter(({ id }) => starredProducts[id]);
+
+    return filtered;
+  },[products, debouncedSearch, filterStarred, starredProducts])
+
   return (
-    <div className="flex h-full w-full flex-col items-center gap-4 p-4">
+    <div className="flex h-full w-full flex-col items-center gap-4 p-4 max-w-6xl mx-auto">
+      <SearchBar filterStarred={filterStarred} onChange={(value) => setSearch(value)} />
       <div
-        className="custom-scrollbar mx-auto flex max-h-full
-                   max-w-5xl flex-wrap justify-center gap-4
+        className="custom-scrollbar flex max-h-full
+                    flex-wrap justify-center gap-4
                    overflow-y-scroll"
       >
-        {products.map((product) => (
+        {filteredProducts.map((product) => (
           <ProductCard key={product.id} product={product} isStarred={starredProducts[product.id]} />
         ))}
       </div>
       <ThemedButton
         onClick={() => setCurrentPage((state) => state + 1)}
-        isLoading={isLoading}
+        isLoading={isLoading.value}
         disabled={totalPages <= currentPage}
         className="w-fit"
       >
