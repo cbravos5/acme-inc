@@ -1,5 +1,5 @@
-import { Input } from "@/components/Input"
-import { Label } from "@/components/Label"
+import { Input } from "@/components/ui/Input"
+import { Label } from "@/components/ui/Label"
 import { ComponentProps, forwardRef } from "react"
 
 type Props = {
