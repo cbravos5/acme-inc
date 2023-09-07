@@ -9,12 +9,6 @@ import { v4 } from "uuid";
 export class GetProducts implements IGetProducts {
 
   private products: Product[] = [];
-  private lorem = new LoremIpsum({
-    wordsPerSentence: {
-      max: 500,
-      min: 20
-    } 
-  });
 
   constructor(
     private readonly getAllowedNouns: IGetAllowedNouns,
@@ -44,7 +38,7 @@ export class GetProducts implements IGetProducts {
   }
 
   // randomly shuffles the array
-  private shuffle(items: string[]) {
+  private shuffle(items: (string | number)[]) {
     for (let i = items.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [items[i], items[j]] = [items[j], items[i]];
@@ -58,9 +52,11 @@ export class GetProducts implements IGetProducts {
     this.shuffle(nouns);
     this.shuffle(adjectives);
 
+    const randomNumbers = this.getRandomNumbers(0, 300, nouns.length);
+
     this.products = nouns.map((noun, i) => {
       const name = `${noun} ${adjectives[i]}`;
-      const description = this.lorem.generateSentences(1);
+      const description = this.generateRandomText(20, 500);
       const price = this.getPrice(name.length, description.length);
 
       return {
@@ -68,7 +64,7 @@ export class GetProducts implements IGetProducts {
         name,
         description,
         price,
-        image: `https://picsum.photos/${i}/picsum/900/600`,
+        image: `https://picsum.photos/id/${randomNumbers[i]}/900/600`,
       };
     });
 
@@ -76,6 +72,32 @@ export class GetProducts implements IGetProducts {
   }
 
   private getPrice(nameLength: number, descrLength: number) {
-    return 10 + nameLength * ((500 - descrLength) / (4 - nameLength));
+    return Number(Math.abs(10 + nameLength * ((500 - descrLength) / (4 - nameLength))).toFixed(2));
   }
-}
+
+  private generateRandomText(minLength: number, maxLength: number) {
+    const charSet = "ABCD EFGHIJKL MNOPQ RSTUVWXY Zabcdefghij klmn opqrst uvwxyz0123456789 ";
+    const textLength = Math.floor(Math.random() * (maxLength - minLength + 1)) + minLength;
+    let randomText = "";
+  
+    for (let i = 0; i < textLength; i++) {
+      const randomIndex = Math.floor(Math.random() * charSet.length);
+      randomText += charSet[randomIndex];
+    }
+  
+    return randomText;
+  }
+
+  // length must be at least max - min
+  private getRandomNumbers(min: number, max: number, length: number) {
+    const numberArray = [];
+
+    for (let index = min; index < max-1; index++) {
+      numberArray.push(index);
+    }
+
+    this.shuffle(numberArray);
+
+    return numberArray.slice(0, length - 1);
+  }
+} 

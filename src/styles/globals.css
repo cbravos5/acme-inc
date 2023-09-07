@@ -49,8 +49,6 @@
     --ring: 20.5 90.2% 48.2%;
   }
 }
-
-
  
 @layer base {
   * {
@@ -64,3 +62,8 @@
   }
 }
 
+@layer components {
+  .custom-scrollbar {
+    @apply [&::-webkit-scrollbar]:w-[5px] [&::-webkit-scrollbar]:h-[5px] [&::-webkit-scrollbar-track]:bg-secondary [&::-webkit-scrollbar-track]:rounded-md [&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-thumb]:rounded-md
+  }
+}

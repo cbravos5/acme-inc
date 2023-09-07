@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import Link from 'next/link';
 import { Button } from '../ui/Button';
@@ -16,9 +16,11 @@ export function SessionStatus() {
         <PopoverTrigger asChild>
           <button className="flex flex-col text-white">
             <span className="text-xs">Bem vindo, </span>
-            <h2 
+            <h2
               className="max-w-[100px] overflow-hidden
-                         overflow-ellipsis whitespace-nowrap">
+                         overflow-ellipsis whitespace-nowrap
+                         text-sm md:text-base"
+            >
               {session.user?.name}
             </h2>
           </button>
