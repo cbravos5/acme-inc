@@ -13,18 +13,29 @@ export default function Home() {
   const starredProducts = useAtomValue(starredProductsAtom);
 
   const [products, setProducts] = useState([] as Product[]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
-  const onGetProducts = async () => {
-    const response = await getProducts.executePaged({ currentPage: 1, pageSize: 10 });
-    setProducts(response.products);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const onGetProducts = async (page: number) => {
+    setIsLoading(true);
+
+    const response = await getProducts.executePaged({ currentPage: page, pageSize: 25 });
+    setProducts((state) => state.concat(response.products));
+    setTotalPages(response.pagination.totalPages);
+
+    setIsLoading(false);
   };
 
   useEffect(() => {
-    onGetProducts();
-  }, []);
+    console.log(currentPage, totalPages)
+
+    onGetProducts(currentPage);
+  }, [currentPage]);
 
   return (
-    <div className="flex h-full w-full flex-col items-center p-4 gap-4">
+    <div className="flex h-full w-full flex-col items-center gap-4 p-4">
       <div
         className="custom-scrollbar mx-auto flex max-h-full
                    max-w-5xl flex-wrap justify-center gap-4
@@ -34,7 +45,14 @@ export default function Home() {
           <ProductCard key={product.id} product={product} isStarred={starredProducts[product.id]} />
         ))}
       </div>
-      <ThemedButton className="w-fit">Carregar mais</ThemedButton>
+      <ThemedButton
+        onClick={() => setCurrentPage((state) => state + 1)}
+        isLoading={isLoading}
+        disabled={totalPages <= currentPage}
+        className="w-fit"
+      >
+        Carregar mais
+      </ThemedButton>
     </div>
   );
 }

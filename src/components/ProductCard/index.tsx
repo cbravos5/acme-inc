@@ -15,12 +15,12 @@ export function ProductCard(props: Props) {
   const { isStarred, product } = props;
 
   return (
-    <Card className="w-full max-w-xs p-1">
+    <Card className="w-full max-w-xs p-1 animate-fade-up flex flex-col">
       <CardHeader className="flex-row items-center justify-between p-2">
         <CardTitle className="text-xl leading-none">{product.name}</CardTitle>
         <StarProduct isStarred={isStarred} />
       </CardHeader>
-      <CardContent className="p-2">
+      <CardContent className="p-2 h-full">
         <Link
           className="block max-h-24 max-w-full overflow-hidden rounded-xl"
           href={`/product/${product.id}`}
