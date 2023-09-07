@@ -12,7 +12,11 @@ export default function Layout({ children }: PropsWithChildren) {
   const session = useAtomValue(sessionAtom);
 
   useEffect(() => {
-    if (session.active && searchParams.get('checkout')) router.push('/checkout');
+    const checkout = searchParams.get('checkout');
+    const product = searchParams.get('product');
+
+    if (session.active && checkout) router.push('/checkout');
+    else if (session.active && product) router.push(`/product/${product}`);
     else if (session.active) router.push('/');
   }, [session]);
 

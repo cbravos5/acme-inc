@@ -16,6 +16,8 @@ import { PasswordInput } from '@/components/PasswordInput';
 import { UserSchema } from '@/domain/models/User';
 import { useSetAtom } from 'jotai';
 import { sessionAtom } from '@/store/session';
+import { useMemo } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 const signUpSchema = z
   .object({
@@ -33,6 +35,7 @@ export default function SignUp() {
   const { toast } = useToast();
 
   const setSession = useSetAtom(sessionAtom);
+  const searchParams = useSearchParams();
 
   const {
     register,
@@ -55,6 +58,16 @@ export default function SignUp() {
       toast({ title: error?.message || 'Ocorreu um erro ao criar sua conta!' })
     }
   };
+
+  const signInUrl = useMemo(() => {
+    const checkout = searchParams.get('checkout');
+    const product = searchParams.get('product');
+
+    if (checkout) return '/sign-in?checkout=true';
+    if (product) return `/sign-in?product=${product}`;
+
+    return '/sign-in';
+  },[])
 
   return (
     <div className="h-full">
@@ -99,7 +112,7 @@ export default function SignUp() {
 
               <p className="text-sm">
                 Já possui uma conta?{' '}
-                <Link className="underline hover:text-gray-300" href="/sign-in">
+                <Link className="underline hover:text-gray-300" href={signInUrl}>
                   Clique aqui
                 </Link>
               </p>
