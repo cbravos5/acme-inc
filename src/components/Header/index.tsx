@@ -1,8 +1,9 @@
+
+
 import Image from 'next/image';
 
 import Logo from '@/assets/Logo-white.svg';
 import Link from 'next/link';
-import { Button } from '@/components/ui/Button';
 import { Cart } from './Cart';
 import { SessionStatus } from './SessionStatus';
 

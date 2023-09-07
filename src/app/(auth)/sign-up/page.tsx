@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { Controller, useForm } from 'react-hook-form';
 import { PatternFormat } from 'react-number-format';
@@ -14,10 +13,9 @@ import { signUp } from '@/main/registry';
 import { useToast } from '@/components/ui/useToast';
 import { PasswordInput } from '@/components/PasswordInput';
 
-import Logo from '@/assets/Logo.svg';
-
 import { UserSchema } from '@/domain/models/User';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSetAtom } from 'jotai';
+import { sessionAtom } from '@/store/session';
 
 const signUpSchema = z
   .object({
@@ -33,8 +31,8 @@ type SignUpForm = z.infer<typeof signUpSchema>;
 
 export default function SignUp() {
   const { toast } = useToast();
-  const router = useRouter();
-  const searchParams = useSearchParams();
+
+  const setSession = useSetAtom(sessionAtom);
 
   const {
     register,
@@ -45,14 +43,13 @@ export default function SignUp() {
 
   const onSubmit = async ({ passwordConfirmation, ...data  }: SignUpForm) => {
     try {
-      await signUp.execute(data);
+      const response = await signUp.execute(data);
 
       toast({ title: 'Conta criada com sucesso!' });
 
-      if(searchParams.get('checkout'))
-        router.push('/checkout');
-      else
-        router.push('/');
+      setSession({ active: true, user: response });
+
+
       
     } catch (error: any) {
       toast({ title: error?.message || 'Ocorreu um erro ao criar sua conta!' })

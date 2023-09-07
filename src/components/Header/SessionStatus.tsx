@@ -4,11 +4,13 @@ import Link from 'next/link';
 import { Button } from '../ui/Button';
 import { SignOutIcon } from '../icons/SignOutIcon';
 import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover';
+import { useAtom } from 'jotai';
+import { sessionAtom } from '@/store/session';
 
 export function SessionStatus() {
-  const session = true;
+  const [session, setSession] = useAtom(sessionAtom);
 
-  if (session)
+  if (session.active)
     return (
       <Popover>
         <PopoverTrigger asChild>
@@ -17,13 +19,13 @@ export function SessionStatus() {
             <h2 
               className="max-w-[100px] overflow-hidden
                          overflow-ellipsis whitespace-nowrap">
-              Olivia Martin
+              {session.user?.name}
             </h2>
           </button>
         </PopoverTrigger>
 
         <PopoverContent className="w-22 rounded-md bg-white p-1 shadow">
-          <Button variant="link">
+          <Button variant="link" onClick={() => setSession({ active: false, user: null })}>
             <SignOutIcon width={20} height={20} /> Sair
           </Button>
         </PopoverContent>
