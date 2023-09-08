@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { Product } from '@/domain/models/Product';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../../../components/ui/Card';
-import { StarProduct } from '../../../components/StarProduct';
-import { Button } from '../../../components/ui/Button';
 import { currencyFormater } from '@/lib/utils';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/Card';
+import { StarProduct } from '@/components/StarProduct';
+import { Button } from '@/components/ui/Button';
 
 type Props = {
   product: Product;
@@ -28,6 +28,7 @@ export function ProductCard(props: Props) {
             draggable="false"
             className="h-full w-full object-cover object-center transition hover:scale-110"
             src={product.image}
+            alt={product.name}
           />
         </Link>
       </CardContent>

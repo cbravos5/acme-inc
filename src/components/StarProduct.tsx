@@ -30,7 +30,7 @@ export function StarProduct({ isStarred, productId, className }: Props) {
   };
 
   return (
-    <button className={cn('!mt-0', className)} onClick={onStar}>
+    <button data-testid="star-product" className={cn('!mt-0', className)} onClick={onStar}>
       <FilledStarIcon className={cn('h-6 w-6 text-gray-400', isStarred && 'animate-star')} />
     </button>
   );
