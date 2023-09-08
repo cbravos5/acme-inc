@@ -9,7 +9,7 @@ export function Providers({ children }: PropsWithChildren) {
   return (
     <Provider>
       <StarredProductsProvider>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light">
           {children}
         </ThemeProvider>
       </StarredProductsProvider>

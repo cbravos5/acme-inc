@@ -25,7 +25,7 @@ export function ProductCheckoutCard(props: Props) {
       <div className="flex h-full w-full items-center justify-center px-4">
         <div className="flex w-full flex-col items-center">
           <div className="flex w-full flex-col items-center justify-between sm:flex-row">
-            <span className="text-2xl text-gray-400 sm:text-3xl">2X</span>
+            <span className="text-2xl text-gray-400 sm:text-3xl">{props.quantity}X</span>
             <h1 className="text-center text-xl font-medium sm:text-2xl">{props.name}</h1>
             <h1 className="whitespace-nowrap text-xl font-medium sm:text-2xl">
               {currencyFormater.format(props.price)}
