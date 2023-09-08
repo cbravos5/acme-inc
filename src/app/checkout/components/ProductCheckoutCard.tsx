@@ -39,7 +39,7 @@ export function ProductCheckoutCard(props: Props) {
         </div>
       </div>
 
-      <Button onClick={() => props.onRemove(props.id)} variant="destructive" className="h-full">
+      <Button data-testid="trash" onClick={() => props.onRemove(props.id)} variant="destructive" className="h-full">
         <TrashIcon className="h-6 w-6" />
       </Button>
     </div>

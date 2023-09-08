@@ -1,9 +1,10 @@
 import React from 'react';
 
-import '@testing-library/jest-dom';
 import { useAtom } from 'jotai';
 import { SessionStatus } from '@/components/Header/SessionStatus';
 import { fireEvent, render } from '@testing-library/react';
+
+import '@testing-library/jest-dom';
 
 jest.mock('jotai', () => ({
   ...jest.requireActual('jotai'),
