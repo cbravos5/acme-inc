@@ -16,10 +16,9 @@ import { PasswordInput } from '@/components/PasswordInput';
 import { UserSchema } from '@/domain/models/User';
 import { useSetAtom } from 'jotai';
 import { sessionAtom } from '@/store/session';
-import { useMemo } from 'react';
-import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { ArrowLeftCircleIcon } from '@/components/icons/ArrowLeftCircleIcon';
+import { SignInButton } from '../components/SignInButton';
 
 const signUpSchema = z
   .object({
@@ -37,7 +36,6 @@ export default function SignUp() {
   const { toast } = useToast();
 
   const setSession = useSetAtom(sessionAtom);
-  const searchParams = useSearchParams();
 
   const {
     register,
@@ -58,16 +56,6 @@ export default function SignUp() {
     }
   };
 
-  const signInUrl = useMemo(() => {
-    const checkout = searchParams.get('checkout');
-    const product = searchParams.get('product');
-
-    if (checkout) return '/sign-in?checkout=true';
-    if (product) return `/sign-in?product=${product}`;
-
-    return '/sign-in';
-  }, []);
-
   return (
     <main className="mx-auto flex h-full w-fit flex-col justify-center gap-2">
       <Button variant="ghost" className="gap-1 self-start text-lg" asChild>
@@ -76,7 +64,7 @@ export default function SignUp() {
           Página inical
         </Link>
       </Button>
-      
+
       <Card className="w-fit md:min-w-md">
         <CardHeader className="items-center">
           <CardTitle className="text-2xl">CRIE SUA CONTA</CardTitle>
@@ -115,12 +103,7 @@ export default function SignUp() {
               Cadastrar
             </ThemedButton>
 
-            <p className="text-sm">
-              Já possui uma conta?{' '}
-              <Link className="underline hover:text-gray-300" href={signInUrl}>
-                Clique aqui
-              </Link>
-            </p>
+            <SignInButton />
           </form>
         </CardContent>
       </Card>

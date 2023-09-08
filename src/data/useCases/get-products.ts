@@ -2,7 +2,6 @@ import { Product } from "@/domain/models/Product";
 import { IGetAllowedAdjectives } from "@/domain/useCases/get-allowed-adjectives";
 import { IGetAllowedNouns } from "@/domain/useCases/get-allowed-nouns";
 import { IGetProducts } from "@/domain/useCases/get-products";
-import { LoremIpsum } from "lorem-ipsum";
 import { IStorage } from "../storage/get-set-storage";
 import { v4 } from "uuid";
 

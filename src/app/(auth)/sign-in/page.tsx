@@ -16,9 +16,8 @@ import { UserSchema } from '@/domain/models/User';
 import { useSetAtom } from 'jotai';
 import { sessionAtom } from '@/store/session';
 import { Button } from '@/components/ui/Button';
-import { useSearchParams } from 'next/navigation';
-import { useMemo } from 'react';
 import { ArrowLeftCircleIcon } from '@/components/icons/ArrowLeftCircleIcon';
+import { CreateAccountButton } from '../components/CreateAccountButton';
 
 const signInSchema = UserSchema.omit({ name: true, phone: true });
 
@@ -28,17 +27,6 @@ export default function SignIn() {
   const { toast } = useToast();
 
   const setSession = useSetAtom(sessionAtom);
-  const searchParams = useSearchParams();
-
-  const createAccountUrl = useMemo(() => {
-    const checkout = searchParams.get('checkout');
-    const product = searchParams.get('product');
-
-    if (checkout) return '/sign-up?checkout=true';
-    if (product) return `/sign-up?product=${product}`;
-
-    return '/sign-up';
-  }, []);
 
   const {
     register,
@@ -89,9 +77,7 @@ export default function SignIn() {
               <span className="bg-background px-2 text-muted-foreground">ou</span>
             </div>
           </div>
-          <Button variant="secondary" className="w-full bg-gray-200" asChild>
-            <Link href={createAccountUrl}>Crie uma conta</Link>
-          </Button>
+          <CreateAccountButton />
         </CardFooter>
       </Card>
     </main>
