@@ -9,6 +9,8 @@
 
 This project is a WebApp built with NextJs 13, that simulates a fictional company named Acme inc. that sells generic products.
 
+The published project could be found [here](https://acme-inc-seven.vercel.app/)
+
 # Quick Start <a id="start"></a>
 
 ### Clone the repository:
