@@ -1,17 +1,14 @@
 'use client';
 
-import { ProductCard } from '@/components/ProductCard';
-import { SearchBar } from '@/components/SearchBar';
 import { ThemedButton } from '@/components/ThemedButton';
-import { FilledStarIcon } from '@/components/icons/FilledStarIcon';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
 import { Product } from '@/domain/models/Product';
 import { getProducts } from '@/main/registry';
 import { starredProductsAtom } from '@/store/starred';
 import { useAtomValue } from 'jotai';
 import { useEffect, useMemo, useState } from 'react';
-import { useBoolean, useDebounce } from 'usehooks-ts'
+import { useBoolean, useDebounce } from 'usehooks-ts';
+import { SearchBar } from './components/SearchBar';
+import { ProductCard } from './components/ProductCard';
 
 export default function Home() {
   const starredProducts = useAtomValue(starredProductsAtom);
@@ -20,8 +17,8 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const [search, setSearch] = useState<string>('')
-  const debouncedSearch = useDebounce<string>(search, 500)
+  const [search, setSearch] = useState<string>('');
+  const debouncedSearch = useDebounce<string>(search, 500);
 
   const filterStarred = useBoolean(false);
 
@@ -49,10 +46,10 @@ export default function Home() {
     if (filterStarred.value) filtered = filtered.filter(({ id }) => starredProducts[id]);
 
     return filtered;
-  },[products, debouncedSearch, filterStarred, starredProducts])
+  }, [products, debouncedSearch, filterStarred, starredProducts]);
 
   return (
-    <div className="flex h-full w-full flex-col items-center gap-4 p-4 max-w-6xl mx-auto">
+    <div className="mx-auto flex h-full w-full max-w-6xl flex-col items-center gap-4 p-4">
       <SearchBar filterStarred={filterStarred} onChange={(value) => setSearch(value)} />
       <div
         className="custom-scrollbar flex max-h-full

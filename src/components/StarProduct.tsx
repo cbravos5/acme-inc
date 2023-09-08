@@ -11,9 +11,10 @@ import { toggleStarredProduct } from '@/main/registry';
 type Props = {
   isStarred: boolean;
   productId: string;
+  className?: string;
 };
 
-export function StarProduct({ isStarred, productId }: Props) {
+export function StarProduct({ isStarred, productId, className }: Props) {
   const session = useAtomValue(sessionAtom);
   const setStarredProducts = useSetAtom(starredProductsAtom);
   const setSignInDialog = useSetAtom(signInDialogAtom);
@@ -29,7 +30,7 @@ export function StarProduct({ isStarred, productId }: Props) {
   };
 
   return (
-    <button className="!m-0" onClick={onStar}>
+    <button className={cn('!mt-0', className)} onClick={onStar}>
       <FilledStarIcon className={cn('h-6 w-6 text-gray-400', isStarred && 'animate-star')} />
     </button>
   );

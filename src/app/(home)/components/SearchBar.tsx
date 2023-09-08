@@ -1,8 +1,7 @@
+import { FilledStarIcon } from '@/components/icons/FilledStarIcon';
+import { SearchIcon } from '@/components/icons/SearchIcon';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/Tooltip';
 import { cn } from '@/lib/utils';
-import { FilledStarIcon } from './icons/FilledStarIcon';
-import { SearchIcon } from './icons/SearchIcon';
-import { TooltipProvider } from '@radix-ui/react-tooltip';
-import { Tooltip, TooltipContent, TooltipTrigger } from './ui/Tooltip';
 
 type Props = {
   onChange: (value: string) => void;

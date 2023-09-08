@@ -1,15 +1,14 @@
 import Link from 'next/link';
 import { Product } from '@/domain/models/Product';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './ui/Card';
-import { StarProduct } from './StarProduct';
-import { Button } from './ui/Button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../../../components/ui/Card';
+import { StarProduct } from '../../../components/StarProduct';
+import { Button } from '../../../components/ui/Button';
+import { currencyFormater } from '@/lib/utils';
 
 type Props = {
   product: Product;
   isStarred: boolean;
 };
-
-const currencyFormater = new Intl.NumberFormat('pt-BR', { currency: 'BRL', style: 'currency' });
 
 export function ProductCard(props: Props) {
   const { isStarred, product } = props;
@@ -23,7 +22,7 @@ export function ProductCard(props: Props) {
       <CardContent className="h-full p-2">
         <Link
           className="block max-h-24 max-w-full overflow-hidden rounded-xl"
-          href={`/product/${product.id}`}
+          href={`/products/${product.id}`}
         >
           <img
             draggable="false"
