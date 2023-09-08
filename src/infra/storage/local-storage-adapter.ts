@@ -4,7 +4,6 @@ export class LocalStorageAdapter implements IStorage {
   set(key: string, value: object): void {
     if (typeof window === 'undefined') return;
 
-    if (process.platform)
     if (value) localStorage.setItem(key, JSON.stringify(value));
     else localStorage.removeItem(key);
   }
@@ -13,7 +12,6 @@ export class LocalStorageAdapter implements IStorage {
     if (typeof window === 'undefined') return;
 
     const item = localStorage.getItem(key);
-
     if (item) return JSON.parse(item)
 
     return null;
