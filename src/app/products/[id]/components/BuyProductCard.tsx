@@ -4,8 +4,13 @@ import { StarProduct } from '@/components/StarProduct';
 import { AddIcon } from '@/components/icons/AddIcon';
 import { SubtractIcon } from '@/components/icons/SubtractIcon';
 import { Button } from '@/components/ui/Button';
+import { ToastAction } from '@/components/ui/Toast';
+import { useToast } from '@/components/ui/useToast';
 import { Product } from '@/domain/models/Product';
 import { currencyFormater } from '@/lib/utils';
+import { cartAtom } from '@/store/cart';
+import { useSetAtom } from 'jotai';
+import Link from 'next/link';
 import { useState } from 'react';
 
 const CARD_CLASSES = `relative flex flex-col items-center
@@ -16,9 +21,40 @@ type Props = Product & { isStarred: boolean };
 
 export function BuyProductCard(props: Props) {
   const [quantity, setQuantity] = useState(1);
+  const setCart = useSetAtom(cartAtom);
+
+  const { toast } = useToast();
 
   const onIncrease = () => setQuantity((state) => (state === 10 ? state : state + 1));
   const onDecrease = () => setQuantity((state) => (state === 1 ? state : state - 1));
+
+  const onBuy = () => {
+    setCart((state) => {
+      const newState = [...state];
+
+      const product = newState.find(({ id }) => id === props.id);
+
+      if (product) {
+        product.quantity += quantity;
+        return newState;
+      }
+
+      const { isStarred, ...newProduct } = props;
+      
+      return newState.concat([{ ...newProduct, quantity }]);
+    })
+
+    toast({
+      className: "flex-col gap-3 items-start",
+      title: `Produto adicionado ao carrinho`, 
+      description: `${props.name} foi adicionado ao carrinho`,
+      action: (
+        <ToastAction altText="Ir para o carrinho">
+          <Link href="/checkout">Ir para o carrinho</Link>
+        </ToastAction>
+      )
+    })
+  }
 
   return (
     <div className={CARD_CLASSES}>
@@ -45,7 +81,7 @@ export function BuyProductCard(props: Props) {
         </div>
       </div>
 
-      <Button className="w-full">COMPRAR</Button>
+      <Button onClick={onBuy} className="w-full">COMPRAR</Button>
     </div>
   );
 }
