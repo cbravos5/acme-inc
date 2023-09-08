@@ -69,13 +69,13 @@ export function BuyProductCard(props: Props) {
         </div>
 
         <div className="flex items-center gap-3">
-          <Button onClick={onDecrease} variant="secondary" className="shadow">
+          <Button data-testid="subtract-button" onClick={onDecrease} variant="secondary" className="shadow">
             <SubtractIcon className="h-6 w-6" />
           </Button>
 
-          <h1 className="w-5 text-center text-2xl">{quantity}</h1>
+          <h1 data-testid="quantity-display" className="w-5 text-center text-2xl">{quantity}</h1>
 
-          <Button onClick={onIncrease} variant="secondary" className="shadow">
+          <Button data-testid="add-button" onClick={onIncrease} variant="secondary" className="shadow">
             <AddIcon className="h-6 w-6" />
           </Button>
         </div>
