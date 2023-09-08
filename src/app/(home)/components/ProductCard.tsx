@@ -34,7 +34,7 @@ export function ProductCard(props: Props) {
       <CardFooter className="items-center justify-between gap-2 p-2">
         <h1 className="w-full text-center text-xl font-bold">{currencyFormater.format(product.price)}</h1>
         <Button asChild>
-          <Link href={`/product/${product.id}`}>COMPRAR</Link>
+          <Link href={`/products/${product.id}`}>COMPRAR</Link>
         </Button>
       </CardFooter>
     </Card>

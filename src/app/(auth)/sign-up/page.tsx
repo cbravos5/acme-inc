@@ -18,6 +18,8 @@ import { useSetAtom } from 'jotai';
 import { sessionAtom } from '@/store/session';
 import { useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { Button } from '@/components/ui/Button';
+import { ArrowLeftCircleIcon } from '@/components/icons/ArrowLeftCircleIcon';
 
 const signUpSchema = z
   .object({
@@ -44,18 +46,15 @@ export default function SignUp() {
     formState: { errors, isSubmitting }
   } = useForm<SignUpForm>({ resolver: zodResolver(signUpSchema) });
 
-  const onSubmit = async ({ passwordConfirmation, ...data  }: SignUpForm) => {
+  const onSubmit = async ({ passwordConfirmation, ...data }: SignUpForm) => {
     try {
       const response = await signUp.execute(data);
 
       toast({ title: 'Conta criada com sucesso!' });
 
       setSession({ active: true, user: response });
-
-
-      
     } catch (error: any) {
-      toast({ title: error?.message || 'Ocorreu um erro ao criar sua conta!' })
+      toast({ title: error?.message || 'Ocorreu um erro ao criar sua conta!' });
     }
   };
 
@@ -67,59 +66,64 @@ export default function SignUp() {
     if (product) return `/sign-in?product=${product}`;
 
     return '/sign-in';
-  },[])
+  }, []);
 
   return (
-    <div className="h-full">
-      <main className="flex h-full w-full items-center justify-center">
-        <Card className="w-fit md:min-w-md">
-          <CardHeader className="items-center">
-            <CardTitle className="text-2xl">CRIE SUA CONTA</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
-              <InputWithLabel label="Nome" error={errors.name?.message} {...register('name')} />
-              <InputWithLabel label="E-mail" error={errors.email?.message} {...register('email')} />
-              <Controller
-                control={control}
-                name="phone"
-                defaultValue=""
-                render={({ field }) => (
-                  <PatternFormat
-                    format="(##) #####-####"
-                    customInput={InputWithLabel}
-                    label="Telefone"
-                    name={field.name}
-                    error={errors.phone?.message}
-                    value={field.value}
-                    onBlur={field.onBlur}
-                    getInputRef={field.ref}
-                    onValueChange={(data) => field.onChange(data.value)}
-                  />
-                )}
-              />
+    <main className="mx-auto flex h-full w-fit flex-col justify-center gap-2">
+      <Button variant="ghost" className="gap-1 self-start text-lg" asChild>
+        <Link href="/">
+          <ArrowLeftCircleIcon className="h-6 w-6" />
+          Página inical
+        </Link>
+      </Button>
+      
+      <Card className="w-fit md:min-w-md">
+        <CardHeader className="items-center">
+          <CardTitle className="text-2xl">CRIE SUA CONTA</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
+            <InputWithLabel label="Nome" error={errors.name?.message} {...register('name')} />
+            <InputWithLabel label="E-mail" error={errors.email?.message} {...register('email')} />
+            <Controller
+              control={control}
+              name="phone"
+              defaultValue=""
+              render={({ field }) => (
+                <PatternFormat
+                  format="(##) #####-####"
+                  customInput={InputWithLabel}
+                  label="Telefone"
+                  name={field.name}
+                  error={errors.phone?.message}
+                  value={field.value}
+                  onBlur={field.onBlur}
+                  getInputRef={field.ref}
+                  onValueChange={(data) => field.onChange(data.value)}
+                />
+              )}
+            />
 
-              <PasswordInput label="Senha" error={errors.password?.message} {...register('password')} />
-              <PasswordInput
-                label="Confirmação de senha"
-                error={errors.passwordConfirmation?.message}
-                {...register('passwordConfirmation')}
-              />
+            <PasswordInput label="Senha" error={errors.password?.message} {...register('password')} />
+            <PasswordInput
+              label="Confirmação de senha"
+              error={errors.passwordConfirmation?.message}
+              {...register('passwordConfirmation')}
+            />
 
-              <ThemedButton isLoading={isSubmitting} className="mt-4">
-                Cadastrar
-              </ThemedButton>
+            <ThemedButton isLoading={isSubmitting} className="mt-4">
+              Cadastrar
+            </ThemedButton>
 
-              <p className="text-sm">
-                Já possui uma conta?{' '}
-                <Link className="underline hover:text-gray-300" href={signInUrl}>
-                  Clique aqui
-                </Link>
-              </p>
-            </form>
-          </CardContent>
-        </Card>
-      </main>
-    </div>
+            <p className="text-sm">
+              Já possui uma conta?{' '}
+              <Link className="underline hover:text-gray-300" href={signInUrl}>
+                Clique aqui
+              </Link>
+            </p>
+          </form>
+        </CardContent>
+      </Card>
+    </main>
   );
 }

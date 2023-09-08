@@ -18,6 +18,7 @@ import { sessionAtom } from '@/store/session';
 import { Button } from '@/components/ui/Button';
 import { useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
+import { ArrowLeftCircleIcon } from '@/components/icons/ArrowLeftCircleIcon';
 
 const signInSchema = UserSchema.omit({ name: true, phone: true });
 
@@ -37,7 +38,7 @@ export default function SignIn() {
     if (product) return `/sign-up?product=${product}`;
 
     return '/sign-up';
-  },[])
+  }, []);
 
   const {
     register,
@@ -56,38 +57,43 @@ export default function SignIn() {
   };
 
   return (
-    <div className="h-full">
-      <main className="flex h-full w-full items-center justify-center">
-        <Card className="w-fit md:min-w-md">
-          <CardHeader className="items-center">
-            <CardTitle className="text-2xl">ACESSE SUA CONTA</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
-              <InputWithLabel label="E-mail" error={errors.email?.message} {...register('email')} />
-              <PasswordInput label="Senha" error={errors.password?.message} {...register('password')} />
+    <main className="mx-auto flex h-full w-fit flex-col justify-center gap-2">
+      <Button variant="ghost" className="gap-1 self-start text-lg" asChild>
+        <Link href="/">
+          <ArrowLeftCircleIcon className="h-6 w-6" />
+          Página inical
+        </Link>
+      </Button>
 
-              <ThemedButton isLoading={isSubmitting} className="mt-4">
-                Entrar
-              </ThemedButton>
-            </form>
-          </CardContent>
+      <Card className="w-fit md:min-w-md">
+        <CardHeader className="items-center">
+          <CardTitle className="text-2xl">ACESSE SUA CONTA</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
+            <InputWithLabel label="E-mail" error={errors.email?.message} {...register('email')} />
+            <PasswordInput label="Senha" error={errors.password?.message} {...register('password')} />
 
-          <CardFooter className="flex-col gap-2">
-            <div className="relative w-full">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background px-2 text-muted-foreground">ou</span>
-              </div>
+            <ThemedButton isLoading={isSubmitting} className="mt-4">
+              Entrar
+            </ThemedButton>
+          </form>
+        </CardContent>
+
+        <CardFooter className="flex-col gap-2">
+          <div className="relative w-full">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t" />
             </div>
-            <Button variant="secondary" className="w-full bg-gray-200" asChild>
-              <Link href={createAccountUrl}>Crie uma conta</Link>
-            </Button>
-          </CardFooter>
-        </Card>
-      </main>
-    </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background px-2 text-muted-foreground">ou</span>
+            </div>
+          </div>
+          <Button variant="secondary" className="w-full bg-gray-200" asChild>
+            <Link href={createAccountUrl}>Crie uma conta</Link>
+          </Button>
+        </CardFooter>
+      </Card>
+    </main>
   );
 }

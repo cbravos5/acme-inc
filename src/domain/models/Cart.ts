@@ -9,5 +9,5 @@ export const CartProductSchema = ProductSchema.merge(
 
 export const CartSchema = z.array(CartProductSchema);
 
-export type CartProduct = z.infer<typeof CartSchema>;
+export type CartProduct = z.infer<typeof CartProductSchema>;
 export type Cart = z.infer<typeof CartSchema>;
