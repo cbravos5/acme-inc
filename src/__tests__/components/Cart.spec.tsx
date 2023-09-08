@@ -1,17 +1,9 @@
 import { Cart } from '@/components/Header/Cart';
 import { render } from '@testing-library/react';
 import { useAtomValue } from 'jotai';
-import { LinkProps } from 'next/link';
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 
 import '@testing-library/jest-dom';
-
-jest.mock(
-  'next/link',
-  () =>
-    ({ children, href }: PropsWithChildren<LinkProps>) =>
-      React.createElement('a', { href }, children)
-);
 
 jest.mock('jotai', () => ({
   ...jest.requireActual('jotai'),

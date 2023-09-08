@@ -1,5 +1,4 @@
-import { LinkProps } from 'next/link';
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 
 import '@testing-library/jest-dom';
 import { useAtom } from 'jotai';
