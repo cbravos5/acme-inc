@@ -12,8 +12,7 @@ import { ArrowLeftCircleIcon } from '@/components/icons/ArrowLeftCircleIcon';
 
 const CONTAINER_CLASSES = `custom-scrollbar mx-auto flex h-full
                            max-h-full w-full max-w-6xl flex-col
-                           items-center md:justify-center gap-4
-                           overflow-y-auto p-4`;
+                           items-center gap-4 overflow-y-auto p-4`;
 
 export default function Product({ params }: { params: { id: string } }) {
   const [product, setProduct] = useState(null as Product | null);
