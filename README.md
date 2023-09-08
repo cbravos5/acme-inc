@@ -1,34 +1,66 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Summary
 
-## Getting Started
+- [About](#about)
+- [Quick Start](#start)
+- [Technical persistence details](#technical-details)
+- [Built using](#built_using)
 
-First, run the development server:
+# About <a id="about"></a>
 
+This project is a WebApp built with NextJs 13, that simulates a fictional company named Acme inc. that sells generic products.
+
+# Quick Start <a id="start"></a>
+
+### Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+git clone https://github.com/cbravos5/acme-inc.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### CD into reposory folder and install the app packages:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Set the enviroment variables:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Create a **.env** file according to the example in **.env.example**
 
-## Learn More
+## Start the app in development mode:
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Usage
+The default app URL is http://localhost:3000.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **'/'**
+  - Paged products list, with search bar and starred filter.
+- **'/sign-in'**
+  - Form to sing in in the application
+- **'/sign-up'**
+  - Form to create your account
+- **'/products/[id]'**
+  - Product specific page containing all product details
+- **'/checkout'**
+  - Page containing all the products added to cart (only allows finishing if signed in)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Technical details
+This project uses frontend only tools, so the persistence is made using localStorage.
 
-## Deploy on Vercel
+Below, are some details about how each model persistence works:
+- **User data**:
+  - When the user creates an account, his basic info is stored in the localStorage with his password encrypted.
+  - When the user wishes to sign in, the storage is searched for the user and, if found, the password and password hash are compared.
+- **Products**
+  - When first accessed, the application verifies if there is a stored list of products and create a global instance to get the same products every time. If no product is stored, then it's generated a new list and stored.
+- **Starred Products**
+  - The list of starred products is also stored in the localStorage. When a signed user stars a product, it triggers a function call that stores the product id and the user email.
+- **Cart**
+  - The products cart is the only model that is not persisted. Everytime the page is reloaded the cart loses its state.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Built using <a id="built_using"></a>
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [NextJs](https://nextjs.org/) - Framework
+- [Typescript](https://www.typescriptlang.org/) - Main language
+- [Shadcn/ui](https://ui.shadcn.com/) - Component library
+- [Jotai](hhttps://jotai.org/) - State Management Library
